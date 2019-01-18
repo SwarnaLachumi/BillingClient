@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://billingsystem.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://billingsystem.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://billingsystem.org/">
+      <s:element name="ListProducts">
+        <s:complexType />
+      </s:element>
+      <s:element name="ListProductsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListProductsResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListInvalidItems">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strstrCartInput" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListInvalidItemsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListInvalidItemsResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetListValidItems">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strstrCartInput" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetListValidItemsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetListValidItemsResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetReceipt">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strstrCartInput" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetReceiptResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetReceiptResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+                  <s:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCostGrandTotal">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="strstrCartInput" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetCostGrandTotalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetCostGrandTotalResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateProductDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ItemId" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="NumOfItemsOffer" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ItemsOfferPrice" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateProductDetailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateProductDetailsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ListProductsSoapIn">
+    <wsdl:part name="parameters" element="tns:ListProducts" />
+  </wsdl:message>
+  <wsdl:message name="ListProductsSoapOut">
+    <wsdl:part name="parameters" element="tns:ListProductsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListInvalidItemsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListInvalidItems" />
+  </wsdl:message>
+  <wsdl:message name="GetListInvalidItemsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListInvalidItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetListValidItemsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetListValidItems" />
+  </wsdl:message>
+  <wsdl:message name="GetListValidItemsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetListValidItemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetReceiptSoapIn">
+    <wsdl:part name="parameters" element="tns:GetReceipt" />
+  </wsdl:message>
+  <wsdl:message name="GetReceiptSoapOut">
+    <wsdl:part name="parameters" element="tns:GetReceiptResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetCostGrandTotalSoapIn">
+    <wsdl:part name="parameters" element="tns:GetCostGrandTotal" />
+  </wsdl:message>
+  <wsdl:message name="GetCostGrandTotalSoapOut">
+    <wsdl:part name="parameters" element="tns:GetCostGrandTotalResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateProductDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateProductDetails" />
+  </wsdl:message>
+  <wsdl:message name="UpdateProductDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateProductDetailsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="MarketBillingSystemSoap">
+    <wsdl:operation name="ListProducts">
+      <wsdl:input message="tns:ListProductsSoapIn" />
+      <wsdl:output message="tns:ListProductsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListInvalidItems">
+      <wsdl:input message="tns:GetListInvalidItemsSoapIn" />
+      <wsdl:output message="tns:GetListInvalidItemsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetListValidItems">
+      <wsdl:input message="tns:GetListValidItemsSoapIn" />
+      <wsdl:output message="tns:GetListValidItemsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetReceipt">
+      <wsdl:input message="tns:GetReceiptSoapIn" />
+      <wsdl:output message="tns:GetReceiptSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCostGrandTotal">
+      <wsdl:input message="tns:GetCostGrandTotalSoapIn" />
+      <wsdl:output message="tns:GetCostGrandTotalSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateProductDetails">
+      <wsdl:input message="tns:UpdateProductDetailsSoapIn" />
+      <wsdl:output message="tns:UpdateProductDetailsSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MarketBillingSystemSoap" type="tns:MarketBillingSystemSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ListProducts">
+      <soap:operation soapAction="http://billingsystem.org/ListProducts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListInvalidItems">
+      <soap:operation soapAction="http://billingsystem.org/GetListInvalidItems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListValidItems">
+      <soap:operation soapAction="http://billingsystem.org/GetListValidItems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReceipt">
+      <soap:operation soapAction="http://billingsystem.org/GetReceipt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCostGrandTotal">
+      <soap:operation soapAction="http://billingsystem.org/GetCostGrandTotal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateProductDetails">
+      <soap:operation soapAction="http://billingsystem.org/UpdateProductDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MarketBillingSystemSoap12" type="tns:MarketBillingSystemSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ListProducts">
+      <soap12:operation soapAction="http://billingsystem.org/ListProducts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListInvalidItems">
+      <soap12:operation soapAction="http://billingsystem.org/GetListInvalidItems" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetListValidItems">
+      <soap12:operation soapAction="http://billingsystem.org/GetListValidItems" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReceipt">
+      <soap12:operation soapAction="http://billingsystem.org/GetReceipt" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCostGrandTotal">
+      <soap12:operation soapAction="http://billingsystem.org/GetCostGrandTotal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateProductDetails">
+      <soap12:operation soapAction="http://billingsystem.org/UpdateProductDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MarketBillingSystem">
+    <wsdl:port name="MarketBillingSystemSoap" binding="tns:MarketBillingSystemSoap">
+      <soap:address location="http://localhost:58188/MarketBillingSystem.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MarketBillingSystemSoap12" binding="tns:MarketBillingSystemSoap12">
+      <soap12:address location="http://localhost:58188/MarketBillingSystem.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
