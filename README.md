@@ -17,4 +17,6 @@ Menu 2 - To checkout Customer Basket and generate Receipt with Total Amount appl
          
 Menu 3- To Update Offer Prices to Products | Input1: SKUID of Product for which offer to be updated | Input2: Number of Units comes in Special offer | Input3: Price for the offered Units | Output: Returns the status of update from web service
         
+*****If input is incorrect, Code is handled in most cases to ignore it and lets the user know that their input is wrong
+*****So it can be tested also with Negative scenarios
   
