@@ -9,7 +9,7 @@ It has three Main options Menu 1 - To visit Products Catalogue | Menu 2 - To che
 Below details states the input and output pattern for each menu
 
 
-Menu 1 - To visit Products Catalogue | Input:NA | Output: Returns all the Products  from the DB in catalogue View
+Menu 1 - To view Product Catalogue | Input:NA | Output: Returns all the Products  from the DB in catalogue View
 
 Menu 2 - To checkout Customer Basket and generate Receipt with Total Amount applying discounts |
         Input: SKUProduct<1>ID-No.ofUnits,SKUProduct2ID-No.ofUnits,SKUProduct<3>ID-No.ofUnits........SKUProduct<n>ID-No.ofUnits |
