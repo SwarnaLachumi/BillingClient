@@ -1,5 +1,5 @@
 # BillingClient
-Billing Client Application acts as Supermarket checkout basket tool for calculating TotalPrice.
+Billing Client Application acts as Supermarket checkout basket tool for calculating TotalPrice from Web Service.
 
 Requirements:
 Client must consume the service to calculate the total price for a number of items by summing their prices including applying any relevant discounts. Weekly offers for products change frequently so it is important to provide the ability to change them.
