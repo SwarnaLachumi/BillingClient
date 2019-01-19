@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 using BillingClient.Service;
@@ -11,14 +12,38 @@ namespace BillingClient
 {
     class Program
     {
-       
+
+        private static Service.MarketBillingSystemSoapClient ServiceCl = new Service.MarketBillingSystemSoapClient();
+        
         static void Main(string[] args)
         {
-            Console.Write(    "Market Billing System Console Application" +
-                              "\n***************************************" 
+            Console.Write(    "Billing System " +
+                             "\n************************************************************************" 
                               );
-            StandardMainTemplate();
+            try
+            {
+                DataTable test = ServiceCl.ListProducts();
+                StandardMainTemplate();
+                char input = Console.ReadKey().KeyChar;
+                ReadinputMain(input);
+
+            }
+            catch {
+                ErrorNoService();
+            };
+          
+        }
+        private static void StandardMainTemplate()
+        {
+            Console.Write(  "\nMain Menu" +
+                            "\n-------------------------------------------------------------------------" +
+                            "\n=> Type '1' - To view Product Catalogue" +
+                            "\n=> Type '2' - To checkout Customer Basket and generate Receipt" +
+                            "\n=> Type '3' - To update special offer for Products" +
+                            "\nEnter :"
+                            );
             char input = Console.ReadKey().KeyChar;
+            Console.Write("\n**************************************************************************");
             ReadinputMain(input);
         }
         private static void ReadinputMain(char input)
@@ -26,31 +51,53 @@ namespace BillingClient
             switch (input)
             {
                 case '1':
-                    Console.Write("\nYou choosed Option 1 - Customer Catologue" +
-                                  "\n------------------------------------------");
+                    Console.Write("\nYou have selected Option 1 - Product Catalogue" +
+                                  "\n-------------------------------------------------------------------------");
                     listProductList();
                     StandardMainTemplate();
                     break;
                 case '2':
-                    Console.Write("\nYou choosed Option 2 - Checkout Customer Basket and generate Receipt" +
-                                  "\n-----------------------------------------------------------------------" +
-                                  "\nPlease enter the itemID followed by '-' 'Number of Units',separated by comma ',' \nEg:A99-10,B15-2,C20-1" +
-                                  "\nIMPORTANT: Provide input in correct format to add item for checkout else input will be ignored in Invalid Itemslist" +
-                                  "\n-----------------------------------------------------------------------" +
-                                  "\nEnter Items and Units in appropriate format:");
+                    Console.Write("\nYou have selected Option 2 - Checkout Customer Basket and generate Receipt" +
+                                  "\n-------------------------------------------------------------------------" +
+                                  "\nPlease enter the Product ID with No. of units purchased in below format \nEg:A99-10,B15-2,C20-1" +
+                                  "\nIMPORTANT: Provide input in appropriate format to add product for checkout else it will be ignored" +
+                                  "\n-------------------------------------------------------------------------" +
+                                  "\n(x <- back to Main Menu)=>Enter your Input:");
                     string strCheckoutlst = Console.ReadLine();
+
+                    if (strCheckoutlst=="x")
+                    {
+                        StandardMainTemplate();
+                        break;
+                    }
+                   
                     CheckOut(strCheckoutlst);
                     StandardMainTemplate();
                     break;
                 case '3':
-                    Console.Write("\nYou choosed Option 3 - Update Offer Details" +
-                                  "\n-----------------------------------------------------------------------" +
-                                  "\nEnter Product ID to update:");
+                    Console.Write("\nYou have selected Option 3 - Update Offer Details" +
+                                  "\n-------------------------------------------------------------------------" +
+                                  "\n( x <- back to Main Menu)=>Enter Product ID to update:");
                     string strProductid = Console.ReadLine();
-                    Console.Write("\nEnter No of Units to be Offered:");
+                    if (strProductid == "x")
+                    {
+                        StandardMainTemplate();
+                        break;
+                    }
+                        Console.Write("\n( x <- back to Main Menu)=>Enter No of Units in Offer:");
                     string strOfferUnits = Console.ReadLine();
-                    Console.Write("\nEnter Price for offered Units:");
+                    if (strOfferUnits == "x")
+                    {
+                        StandardMainTemplate();
+                        break;
+                    }
+                    Console.Write("\n( x <- back to Main Menu)=>Enter Offer Price:");
                     string strOfferPrice = Console.ReadLine();
+                    if (strOfferPrice == "x")
+                    {
+                        StandardMainTemplate();
+                        break;
+                    }
                     UpdateOfferPrice(strProductid, strOfferUnits, strOfferPrice);
                     StandardMainTemplate();
                     break;
@@ -60,20 +107,9 @@ namespace BillingClient
                     break;
             }
         }
-        private static void StandardMainTemplate()
-        {
-            Console.Write(
-                            "\n=>Enter '1' - To visit Products Catalogue" +
-                            "\n=>Enter '2' - To checkout Customer Basket and to generate Receipt" +
-                            "\n=>Enter '3' - To Update Offer Prices to Products" +
-                            "\nEnter Option:"
-                            );
-            char input = Console.ReadKey().KeyChar;
-            ReadinputMain(input);
-        }
+      
         private static void listProductList()
         {
-            Service.MarketBillingSystemSoapClient ServiceCl = new Service.MarketBillingSystemSoapClient();
             DataTable ProductList = ServiceCl.ListProducts();
             ProductList.TableName = "Product_Details";
             ProductList.Columns.Add("Item_Id");
@@ -81,9 +117,9 @@ namespace BillingClient
             ProductList.Columns.Add("Unit_Price");
             ProductList.Columns.Add("Sp_Offer_Count");
             ProductList.Columns.Add("Sp_Offer_Price");
-            Console.Write("\nCustomer Product Catalogue" +
-                          "\n------------------------------------------");
-            Console.WriteLine("\nSlNo\t\tItemId\t\tItemDesc\tItemUnitPrice\tOfferUnits\tOfferPrice");
+            Console.Write("\nProduct Catalogue" +
+                          "\n-------------------------------------------------------------------------");
+            Console.WriteLine("\nSl.No\t\tProduct Id\tDescription\tUnitPrice\tSpecial Offer");
             Console.WriteLine("\n****************************************************************************************\n");
 
             foreach (DataRow dataRow in ProductList.Rows)
@@ -97,7 +133,6 @@ namespace BillingClient
       
         private static void CheckOut(string strItemsList)
         {
-            Service.MarketBillingSystemSoapClient ServiceCl = new Service.MarketBillingSystemSoapClient();
             DataTable Receipt = ServiceCl.GetReceipt(strItemsList);
             string GrandTotal = ServiceCl.GetCostGrandTotal(strItemsList);
             string[] ValidItemList = ServiceCl.GetListValidItems(strItemsList);
@@ -105,14 +140,14 @@ namespace BillingClient
 
             string ValidItemsJoin = string.Join(",", ValidItemList);
             string InvalidItemsListJoin = string.Join(",", InvalidItemsList);
-            Console.Write("\n------------------------------------------" +
-                           "\nYour Valid Items:" + ValidItemsJoin +
-                          "\nYour invalid Items:" + InvalidItemsListJoin+
-                           "\n------------------------------------------" );
+            Console.Write("\n-------------------------------------------------------------------------" +
+                           "\nValid Products:" + ValidItemsJoin +
+                           "\nInvalid Products:" + InvalidItemsListJoin+
+                           "\n-------------------------------------------------------------------------");
 
 
             Console.Write("\nCustomer Receipt" +
-                          "\n------------------------------------------" +
+                         "\n-------------------------------------------------------------------------" +
                           "\nSlNo\tItemDescription\t\tUnitPrice\tSpecialOffer\t\tUnits\t\tItem_Cost"+
                           "\n***************************************************************************************************\n");
             foreach (DataRow dataRow in Receipt.Rows)
@@ -121,19 +156,26 @@ namespace BillingClient
                 Console.WriteLine(row);
             }
 
-            Console.WriteLine("----------------------------------------------------------------------------------------------------"+
+            Console.WriteLine("\n-------------------------------------------------------------------------" +
                                "\t\t\t\t\t\t\t\t\t\t\t\tTotal Amount = " + GrandTotal +"\n");
             
         }
-        private static void UpdateOfferPrice(string strProductid,string strOfferUnits,string strOfferPrice)
+        private static void UpdateOfferPrice(string strProductid, string strOfferUnits, string strOfferPrice)
         {
-            Service.MarketBillingSystemSoapClient ServiceCl = new Service.MarketBillingSystemSoapClient();
             string strUpdateResponse = ServiceCl.UpdateProductDetails(strProductid, strOfferUnits, strOfferPrice);
-            Console.Write("\n---------------------------------------------------------\n"+
-                          "\nResponce Received from Service" +
-                          "\n---------------------------------------------------------\n" +
-                          strUpdateResponse+
-                          "\n---------------------------------------------------------\n");
+            Console.Write("\n-------------------------------------------------------------------------" +
+                          "\nResponse Received from Service" +
+                          "\n-------------------------------------------------------------------------\n" +
+                          strUpdateResponse +
+                          "\n-------------------------------------------------------------------------\n");
+        }
+
+        private static void ErrorNoService()
+        {
+            Console.WriteLine("\n-------------------------------------------------------------------------" +
+                               "\nError: Sorry the service is not running currently. Please try Later" +
+                               "\n-------------------------------------------------------------------------");
+            Console.ReadKey();
         }
       
     }
