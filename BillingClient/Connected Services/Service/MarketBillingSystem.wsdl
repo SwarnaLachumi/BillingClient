@@ -2,6 +2,16 @@
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://billingsystem.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://billingsystem.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://billingsystem.org/">
+      <s:element name="IsServiceAvailable">
+        <s:complexType />
+      </s:element>
+      <s:element name="IsServiceAvailableResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="IsServiceAvailableResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="ListProducts">
         <s:complexType />
       </s:element>
@@ -105,6 +115,12 @@
       </s:element>
     </s:schema>
   </wsdl:types>
+  <wsdl:message name="IsServiceAvailableSoapIn">
+    <wsdl:part name="parameters" element="tns:IsServiceAvailable" />
+  </wsdl:message>
+  <wsdl:message name="IsServiceAvailableSoapOut">
+    <wsdl:part name="parameters" element="tns:IsServiceAvailableResponse" />
+  </wsdl:message>
   <wsdl:message name="ListProductsSoapIn">
     <wsdl:part name="parameters" element="tns:ListProducts" />
   </wsdl:message>
@@ -142,6 +158,10 @@
     <wsdl:part name="parameters" element="tns:UpdateProductDetailsResponse" />
   </wsdl:message>
   <wsdl:portType name="MarketBillingSystemSoap">
+    <wsdl:operation name="IsServiceAvailable">
+      <wsdl:input message="tns:IsServiceAvailableSoapIn" />
+      <wsdl:output message="tns:IsServiceAvailableSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="ListProducts">
       <wsdl:input message="tns:ListProductsSoapIn" />
       <wsdl:output message="tns:ListProductsSoapOut" />
@@ -169,6 +189,15 @@
   </wsdl:portType>
   <wsdl:binding name="MarketBillingSystemSoap" type="tns:MarketBillingSystemSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IsServiceAvailable">
+      <soap:operation soapAction="http://billingsystem.org/IsServiceAvailable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ListProducts">
       <soap:operation soapAction="http://billingsystem.org/ListProducts" style="document" />
       <wsdl:input>
@@ -226,6 +255,15 @@
   </wsdl:binding>
   <wsdl:binding name="MarketBillingSystemSoap12" type="tns:MarketBillingSystemSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IsServiceAvailable">
+      <soap12:operation soapAction="http://billingsystem.org/IsServiceAvailable" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ListProducts">
       <soap12:operation soapAction="http://billingsystem.org/ListProducts" style="document" />
       <wsdl:input>

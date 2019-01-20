@@ -16,6 +16,13 @@ namespace BillingClient.Service {
     [System.ServiceModel.ServiceContractAttribute(Namespace="http://billingsystem.org/", ConfigurationName="Service.MarketBillingSystemSoap")]
     public interface MarketBillingSystemSoap {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://billingsystem.org/IsServiceAvailable", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        bool IsServiceAvailable();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://billingsystem.org/IsServiceAvailable", ReplyAction="*")]
+        System.Threading.Tasks.Task<bool> IsServiceAvailableAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://billingsystem.org/ListProducts", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         System.Data.DataTable ListProducts();
@@ -84,6 +91,14 @@ namespace BillingClient.Service {
         
         public MarketBillingSystemSoapClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public bool IsServiceAvailable() {
+            return base.Channel.IsServiceAvailable();
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsServiceAvailableAsync() {
+            return base.Channel.IsServiceAvailableAsync();
         }
         
         public System.Data.DataTable ListProducts() {
